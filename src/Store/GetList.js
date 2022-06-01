@@ -9,7 +9,7 @@ export const GetList = {
 		RoutesListReceived: false,
 		SensList: [],
 		SensListReceived: false,
-		Simulation: true
+		Simulation: true			//Режим симуляции данных (ОТЛАДКА)
 	}),
 	getters: {
 		getRoutesList(State) {
@@ -177,7 +177,11 @@ export const GetList = {
 			//При стартовой загрузке (нав.код 200) получить данные о маршрутах и временной диапазон
 			//Следующие запросы получать временной диапазон
 			if (inVal === 200) {
-				urlStr = 'http://192.168.0.120:8088/Route/Range';
+				if(!state.Simulation){
+					urlStr = 'http://192.168.0.120:8088/Route/Range';
+				} else {
+					urlStr = 'http://localhost:3000/RoutList';
+				}	
 				StartTime = new Date().toLocaleDateString("en-CA");
 				EndTime = new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString("en-CA");
 			} else {
@@ -190,7 +194,11 @@ export const GetList = {
 				inVal = rootGetters['NavAndDate/getNavCode'];
 			}
 			if (inVal === 1) {
-				urlStr = 'http://192.168.0.120:8088/Route/Range';
+				if(!state.Simulation){
+					urlStr = 'http://192.168.0.120:8088/Route/Range';
+				} else {
+					urlStr = 'http://localhost:3000/RoutList';
+				}				
 			} else if (inVal === 11) {
 				urlStr = 'https://jsonplaceholder.typicode.com/posts';
 			} else if (inVal === 12) {
@@ -201,9 +209,11 @@ export const GetList = {
 				urlStr = 'https://jsonplaceholder.typicode.com/posts';
 			}
 
+
+
 			//Не режим симуляции обратиться к серверу
 			//В симуляции вставить данные для симуляции
-			if (!state.Simulation) {
+			//if (!state.Simulation) {
 				try {
 					const response = await axios.get(urlStr, {
 						params: {
@@ -232,180 +242,180 @@ export const GetList = {
 					} else if (inVal === 3) {;
 					}
 				}
-			} else {
-				if (inVal === 1 || inVal === 200) {
-					//Список маршрутов для симуляции (нав. код 1 или 200)
-					state.RoutesListReceived = true;
-					state.RoutesList = [{
-							Culture: "Ячмень",
-							MesIDRout: 2,
-							Receiver: "Силос 3,4",
-							Source: "Автоприем 1",
-							StartTime: "2022-02-16T16:22:55+02:00",
-							StopTime: "2022-02-16T16:25:40+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 3,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 4,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 5,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 6,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 7,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 8,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 9,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 10,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 11,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 12,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 13,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 14,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 15,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 16,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 17,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 18,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						},
-						{
-							Culture: "Кукуруза",
-							MesIDRout: 19,
-							Receiver: "Сушилка 2",
-							Source: "Автоприем 2",
-							StartTime: "2022-02-16T16:41:42+02:00",
-							StopTime: "2022-02-16T16:44:06+02:00"
-						}
-					]
-				} else if (inVal === 11) {
-					//Список событий в маршруте для симуляции (нав. код 11)
+			// } else {
+			// 	if (inVal === 1 || inVal === 200) {
+			// 		//Список маршрутов для симуляции (нав. код 1 или 200)
+			// 		state.RoutesListReceived = true;
+			// 		state.RoutesList = [{
+			// 				Culture: "Ячмень",
+			// 				MesIDRout: 2,
+			// 				Receiver: "Силос 3,4",
+			// 				Source: "Автоприем 1",
+			// 				StartTime: "2022-02-16T16:22:55+02:00",
+			// 				StopTime: "2022-02-16T16:25:40+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 3,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 4,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 5,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 6,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 7,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 8,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 9,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 10,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 11,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 12,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 13,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 14,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 15,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 16,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 17,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 18,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			},
+			// 			{
+			// 				Culture: "Кукуруза",
+			// 				MesIDRout: 19,
+			// 				Receiver: "Сушилка 2",
+			// 				Source: "Автоприем 2",
+			// 				StartTime: "2022-02-16T16:41:42+02:00",
+			// 				StopTime: "2022-02-16T16:44:06+02:00"
+			// 			}
+			// 		]
+			// 	} else if (inVal === 11) {
+			// 		//Список событий в маршруте для симуляции (нав. код 11)
 
-				} else if (inVal === 2) {
-					//Список датчиков для симуляции (нав. код 2)
-					state.SensListReceived = true;
-					state.SensList = [{
-							Type: "Подпор (нижний)",
-							Mech: "Нория Н1",
-							ErrorsNum: 8
-						},
-						{
-							Type: "Подпор (нижний)",
-							Mech: "Нория Н2",
-							ErrorsNum: 10
-						},
-						{
-							Type: "Подпор (привод)",
-							Mech: "Конвейер КЛ-2",
-							ErrorsNum: 2
-						}
-					]
-				} else if (inVal === 3) {;
-				}
-			}
+			// 	} else if (inVal === 2) {
+			// 		//Список датчиков для симуляции (нав. код 2)
+			// 		state.SensListReceived = true;
+			// 		state.SensList = [{
+			// 				Type: "Подпор (нижний)",
+			// 				Mech: "Нория Н1",
+			// 				ErrorsNum: 8
+			// 			},
+			// 			{
+			// 				Type: "Подпор (нижний)",
+			// 				Mech: "Нория Н2",
+			// 				ErrorsNum: 10
+			// 			},
+			// 			{
+			// 				Type: "Подпор (привод)",
+			// 				Mech: "Конвейер КЛ-2",
+			// 				ErrorsNum: 2
+			// 			}
+			// 		]
+			// 	} else if (inVal === 3) {;
+			// 	}
+			// }
 		}
 	},
 	namespaced: true
