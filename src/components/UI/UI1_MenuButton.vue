@@ -48,7 +48,7 @@ export default {
 			this.$emit('em_click', this.p_NavCod);	//Изменить состояние (нажата/не нажата) кнопки левого меню
 			this.$router.push(this.p_Route);		//Вывести страницу согласно маршрутуVUE в блок контента 
 			this.SetNavFirst(this.p_Lable);			//Установить первую запись в массив хлеб.крошек
-			this.fetchList(this.p_NavCod);		//
+			this.fetchList(this.p_NavCod);			//
 			this.SetNavCode(this.p_NavCod);
 		}
 	},

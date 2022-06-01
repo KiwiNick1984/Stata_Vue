@@ -67,6 +67,8 @@
 
 <script>
 import VueApexCharts from 'vue3-apexcharts'
+import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
+
 export default {
 	components: {
 		apexchart: VueApexCharts,
@@ -254,6 +256,13 @@ export default {
 		}
 	},
 	computed:{
+		...mapGetters({
+			getRoutEventList : 'GetList/getRoutEventList'
+		}),
+		com_RoutesEventList()
+		{
+			
+		},
 		com_GetMin(){
 			var elapsed = this.seriesTimeLine[0].end - this.seriesTimeLine[0].start;
 			return elapsed;
