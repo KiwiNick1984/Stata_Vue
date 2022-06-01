@@ -4,11 +4,12 @@ export const GetList = {
 	name: 'GetList',
 	state: () => ({
 		RoutesList: [], 			//Список маршрутов
-		RoutEventList: [],			//Список событий в маршруте
-		RoutMechList: [],			//Список механизмов в маршруте
 		RoutesListReceived: false,
-		RoutReceived: false,
-		SensList: [],
+		RoutEventList: [],			//Список событий в маршруте
+		RoutEventListReceived: false,
+		RoutMechList: [],			//Список механизмов в маршруте		
+		RoutMechListReceived: false,
+		SensList: [],				//Список датчиков
 		SensListReceived: false,
 		Simulation: true			//Режим симуляции данных (ОТЛАДКА)
 	}),
@@ -163,13 +164,13 @@ export const GetList = {
 		//		получить список маршрутов за текущие сктки
 		//300 - Обновить данные
 		//1	  - Получить список маршрутов
-		//11  - Получить данные по маршруту
-		//		(Список событий в маршруте, механизмы в маршруте, время работы/простоя)
 		//2   - Получить список датчиков с ошибками
 		async fetchList({ state, commit, getters, rootGetters }, inVal) {
 			state.RoutesList.length = 0;
-			state.SensList.length = 0;
 			state.RoutesListReceived = false;
+			state.RoutEventList.length = 0;
+			state.RoutEventListReceived = false;
+			state.SensList.length = 0;		
 			state.SensListReceived = false;
 			let urlStr = ''; 	//url для запроса данных
 			let StartTime = ''; //Начало периода
@@ -202,14 +203,6 @@ export const GetList = {
 					urlStr = 'http://localhost:3000/RoutList';
 				}				
 			} 
-			else if (inVal === 11)	//Получить данные по маршруту (нав. код 11)
-			{
-				if(!state.Simulation){
-					urlStr = 'https://jsonplaceholder.typicode.com/posts';
-				} else {
-					urlStr = 'http://localhost:3000/RoutEventList';
-				}	
-			}
 			else if (inVal === 12)
 			{
 				urlStr = 'https://jsonplaceholder.typicode.com/posts';
@@ -221,7 +214,9 @@ export const GetList = {
 				} else {
 					urlStr = 'http://localhost:3000/SensList';
 				}				
-			} else if (inVal === 3) {
+			}
+			else if (inVal === 3) 
+			{
 				urlStr = 'https://jsonplaceholder.typicode.com/posts';
 			}
 
@@ -238,13 +233,7 @@ export const GetList = {
 					(state.RoutesListReceived) ? state.RoutesList = response.data: state.RoutesList = [];
 					state.RoutesListReceived = true;
 				}
-				else if (inVal === 11)				//Список датчиков для симуляции (нав. код 2)
-				{
-					state.RoutReceived = ((response.data.length > 0) && ('Culture' in response.data[0]));
-					//(state.RoutesListReceived) ? state.RoutesList = response.data: state.RoutesList = [];
-					//state.RoutesListReceived = true;
-				}
-				else if (inVal === 2)				//Список датчиков для симуляции (нав. код 2)
+				else if (inVal === 2)				//Список датчиков (нав. код 2)
 				{
 					state.SensListReceived = ((response.data.length > 0) && ('Mech' in response.data[0]));
 					(state.SensListReceived) ? state.SensList = response.data: state.SensList = [];
@@ -270,6 +259,45 @@ export const GetList = {
 				{
 					;
 				}
+			}
+		},
+
+		//Полусить список событий в маршруте
+		async fetchRoutEventList({ state, commit, getters, rootGetters }, ID_Rout) {
+			state.RoutesList.length = 0;
+			state.RoutesListReceived = false;
+			state.RoutEventList.length = 0;
+			state.RoutEventListReceived = false;
+			state.SensList.length = 0;		
+			state.SensListReceived = false;
+			let urlStr = ''; 	//url для запроса данных
+			let StartTime = ''; //Начало периода
+			let EndTime = ''; 	//Конец периода
+
+			if(!state.Simulation){
+				urlStr = 'https://jsonplaceholder.typicode.com/posts';
+			} else {
+				urlStr = 'http://localhost:3000/RoutEventList';
+			}
+
+			StartTime = rootGetters['NavAndDate/getStartDate'].toLocaleDateString("en-CA");
+			EndTime = new Date(new Date().setDate(rootGetters['NavAndDate/getEndDate'].getDate() + 1)).toLocaleDateString("en-CA");
+
+			try {
+				const response = await axios.get(urlStr, {
+					params: {
+						startTime: StartTime,
+						endTime: EndTime,
+						ID_Rout: ID_Rout
+					}
+				});
+
+				state.RoutEventListReceived = ((response.data.length > 0) && ('Status' in response.data[0]));
+				(state.RoutEventListReceived) ? state.RoutEventList = response.data: state.RoutEventList = [];
+				state.RoutEventListReceived = true;	
+			} catch (e) {
+				alert('Ошибка');
+				console.log('state.RoutEventListReceived = ' + state.RoutEventListReceived);
 			}
 		}
 	},

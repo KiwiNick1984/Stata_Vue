@@ -22,6 +22,7 @@
 		<div class="routetab__lines" v-if = d_DataReceived>
 			<comp-routeline v-for="(line) in com_RoutesList"
 							:key = line.id
+							:p_ID = line.MesIDRout
 							:p_NavCod = 11
 							:p_Start = line.Source
 							:p_End = line.Receiver

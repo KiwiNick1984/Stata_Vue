@@ -66,12 +66,12 @@ export default {
 	methods: {
 		...mapMutations({SetNavForward : 'NavAndDate/SetNavForward',
 						SetNavCode : 'NavAndDate/SetNavCode'}),
-		...mapActions({fetchList : 'GetList/fetchList'}),
+		...mapActions({fetchRoutEventList : 'GetList/fetchRoutEventList'}),
 		m_click()
 		{
 			this.$router.push(this.p_Route);						//Вывести страницу согласно маршрутуVUE в блок контента 
 			this.SetNavForward(this.p_Start +" -> "+ this.p_End);	//Установить следующую запись в массив хлеб.крошек	
-			this.fetchList(this.p_NavCod);	
+			this.fetchRoutEventList(this.p_ID);	
 			this.SetNavCode(this.p_NavCod);							
 		}
 	},
