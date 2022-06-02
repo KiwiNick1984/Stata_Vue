@@ -100,7 +100,66 @@
 		}
 	],
 	"RoutMechList":[
-
+		{
+			"ID" : 1,
+			"Status" : 1,
+			"Lable" : "Силос СБ-3",
+			"Last" : false
+		},
+		{
+			"ID" : 2,
+			"Status" : 1,
+			"Lable" : "Задвижка КЗ-3",
+			"Last" : false
+		},
+		{
+			"ID" : 3,
+			"Status" : 1,
+			"Lable" : "Конвейер КЛ-2",
+			"Last" : false
+		},
+		{
+			"ID" : 4,
+			"Status" : 1,
+			"Lable" : "перекидной клапан ПК-8",
+			"Last" : false
+		},
+		{
+			"ID" : 5,
+			"Status" : 1,
+			"Lable" : "Нория Н-3",
+			"Last" : false
+		},
+		{
+			"ID" : 6,
+			"Status" : 1,
+			"Lable" : "Нория Н-3",
+			"Last" : false
+		},
+		{
+			"ID" : 7,
+			"Status" : 1,
+			"Lable" : "Нория Н-3",
+			"Last" : false
+		},
+		{
+			"ID" : 8,
+			"Status" : 1,
+			"Lable" : "Нория Н-3",
+			"Last" : false
+		},
+		{
+			"ID" : 9,
+			"Status" : 1,
+			"Lable" : "Нория Н-3",
+			"Last" : false
+		},
+		{
+			"ID" : 10,
+			"Status" : 1,
+			"Lable" : "Нория Н-3",
+			"Last" : false
+		}
 	],
 	"SensList":[
 		{
