@@ -20,6 +20,9 @@ export const GetList = {
 		getRoutEventList(State) {
 			return State.RoutEventList;
 		},
+		getRoutMechList(State) {
+			return State.RoutMechList;
+		},
 		getSensLisn(State) {
 			return State.SensList;
 		},
@@ -298,6 +301,39 @@ export const GetList = {
 			} catch (e) {
 				alert('Ошибка');
 				console.log('state.RoutEventListReceived = ' + state.RoutEventListReceived);
+			}
+		},
+		//Полусить список механизмов в маршруте
+		async fetchRoutMechList({ state, commit, getters, rootGetters }, ID_Rout) {
+			state.RoutesList.length = 0;
+			state.RoutesListReceived = false;
+			state.RoutMechList.length = 0;
+			state.RoutMechListReceived = false
+			state.SensList.length = 0;		
+			state.SensListReceived = false;
+			let urlStr = ''; 	//url для запроса данных
+			let StartTime = ''; //Начало периода
+			let EndTime = ''; 	//Конец периода
+
+			if(!state.Simulation){
+				urlStr = 'https://jsonplaceholder.typicode.com/posts';
+			} else {
+				urlStr = 'http://localhost:3000/RoutMechList';
+			}
+
+			try {
+				const response = await axios.get(urlStr, {
+					params: {
+						ID_Rout: ID_Rout
+					}
+				});
+
+				state.RoutMechListReceived = ((response.data.length > 0) && ('ID' in response.data[0]));
+				(state.RoutMechListReceived) ? state.RoutMechList = response.data: state.RoutMechList = [];
+				state.RoutMechListReceived = true;	
+			} catch (e) {
+				alert('Ошибка загрузки списка механизмов в маршруте!');
+				console.log('state.RoutMechListReceived = ' + state.RoutMechListReceived);
 			}
 		}
 	},

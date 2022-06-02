@@ -51,7 +51,7 @@
 						Механизмы в маршруте
 					</div>
 					<div class="rout__tables__worckmech__mech__table">
-						<comp-rout-mechline v-for="(line) in temp_arr_mech"
+						<comp-rout-mechline v-for="(line) in com_RoutesMechList"
 											:key = line.id
 											:p_ID = line.p_ID
 											:p_Status = line.Status
@@ -75,68 +75,6 @@ export default {
 	},
 
 	data: () => ({
-		temp_arr_mech :[
-			{
-				ID : 1,
-				Status : 1,
-				Lable : "Силос СБ-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Задвижка КЗ-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Конвейер КЛ-2",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Конвейер КЛ-13",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Нория Н-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Нория Н-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Нория Н-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Нория Н-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Нория Н-3",
-				Last : false
-			},
-			{
-				ID : 2,
-				Status : 1,
-				Lable : "Нория Н-3",
-				Last : false
-			}
-		],
 		series: [10, 90],
 		seriesTimeLine: [
 			{
@@ -216,15 +154,28 @@ export default {
 	computed:{
 		...mapState({
 			d_RoutEventListReceived : state => state.GetList.RoutEventListReceived,
+			d_RoutMechListReceived : state => state.GetList.RoutMechListReceived
 		}),
 		...mapGetters({
-			getRoutEventList : 'GetList/getRoutEventList'
+			getRoutEventList : 'GetList/getRoutEventList',
+			getRoutMechList : 'GetList/getRoutMechList',
 		}),
 		com_RoutesEventList()
 		{
 			if (this.d_RoutEventListReceived)			
 			{
 				return this.getRoutEventList;
+			}
+			else
+			{
+				return [];
+			}
+		},
+		com_RoutesMechList()
+		{
+			if (this.d_RoutMechListReceived)			
+			{
+				return this.getRoutMechList;
 			}
 			else
 			{
