@@ -22,4 +22,7 @@ Components.forEach(element => {
 	app.component(element.name, element)
 });
 
-app.use(Router).use(store).use(VueApexCharts).mount('#app');
+app.use(Router);
+app.use(store);
+app.use(VueApexCharts);
+app.mount('#app');
