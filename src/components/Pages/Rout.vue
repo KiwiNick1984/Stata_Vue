@@ -11,8 +11,8 @@
 				<div class="lable">
 					События в маршруте
 				</div>
-				<div class="rout__tables__events__table">
-					<comp-eventline v-for="(line) in temp_arr_event"
+				<div class="rout__tables__events__table">					
+					<comp-eventline v-for="(line) in com_RoutesEventList" 
 									:key="line.id"
 									:p_Status="line.Status"
 									:p_lable="line.Lable"
@@ -75,48 +75,6 @@ export default {
 	},
 
 	data: () => ({
-		temp_arr_event : [
-			{
-				Status : 1,
-				Lable : "Запус маршрута",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			},
-			{
-				Status : 2,
-				Lable : "Ошибка КС-3",
-				Time : "2022-02-16T16:22:55+02:00"
-			}
-		],
 		temp_arr_mech :[
 			{
 				ID : 1,
@@ -256,12 +214,22 @@ export default {
 		}
 	},
 	computed:{
+		...mapState({
+			d_RoutEventListReceived : state => state.GetList.RoutEventListReceived,
+		}),
 		...mapGetters({
 			getRoutEventList : 'GetList/getRoutEventList'
 		}),
 		com_RoutesEventList()
 		{
-			
+			if (this.d_RoutEventListReceived)			
+			{
+				return this.getRoutEventList;
+			}
+			else
+			{
+				return [];
+			}
 		},
 		com_GetMin(){
 			var elapsed = this.seriesTimeLine[0].end - this.seriesTimeLine[0].start;

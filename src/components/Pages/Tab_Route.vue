@@ -81,7 +81,8 @@ export default {
 			{
 				return this.getRoutesList;
 			}
-			else{
+			else
+			{
 				return [];
 			}
 		},
