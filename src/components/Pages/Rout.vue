@@ -3,7 +3,6 @@
 	<div class="rout">
 		<div class="rout__timeline" >
 			<comp-rout-timeline :p_Events="seriesTimeLine">
-
 			</comp-rout-timeline>
 		</div>
 		<div class="rout__tables">

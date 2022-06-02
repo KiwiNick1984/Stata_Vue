@@ -5,6 +5,8 @@ export const GetList = {
 	state: () => ({
 		RoutesList: [], 			//Список маршрутов
 		RoutesListReceived: false,
+		RoutTimeLine: [],			//Данныее линии времени маршрута
+		RoutTimeLineReceived: false,
 		RoutEventList: [],			//Список событий в маршруте
 		RoutEventListReceived: false,
 		RoutMechList: [],			//Список механизмов в маршруте		
@@ -264,7 +266,37 @@ export const GetList = {
 				}
 			}
 		},
+		//Полусить данные линии времени маршрута
+		async fetchRoutTimeLine({ state, commit, getters, rootGetters }, ID_Rout) {
+			state.RoutesList.length = 0;
+			state.RoutesListReceived = false;
+			state.RoutTimeLine.length = 0;
+			state.RoutTimeLineReceived = false;
+			state.SensList.length = 0;		
+			state.SensListReceived = false;
+			let urlStr = ''; 	//url для запроса данных
 
+			if(!state.Simulation){
+				urlStr = 'https://jsonplaceholder.typicode.com/posts';
+			} else {
+				urlStr = 'http://localhost:3000/RoutTimeLine';
+			}
+
+			try {
+				const response = await axios.get(urlStr, {
+					params: {
+						ID_Rout: ID_Rout
+					}
+				});
+
+				state.RoutTimeLineReceived = ((response.data.length > 0) && ('type' in response.data[0]));
+				(state.RoutTimeLineReceived) ? state.RoutTimeLine = response.data: state.RoutTimeLine = [];
+				state.RoutTimeLineReceived = true;	
+			} catch (e) {
+				alert('Ошибка загрузки временной линии маршрута!');
+				console.log('state.RoutTimeLineReceived = ' + state.RoutTimeLineReceived);
+			}
+		},
 		//Полусить список событий в маршруте
 		async fetchRoutEventList({ state, commit, getters, rootGetters }, ID_Rout) {
 			state.RoutesList.length = 0;
@@ -274,8 +306,6 @@ export const GetList = {
 			state.SensList.length = 0;		
 			state.SensListReceived = false;
 			let urlStr = ''; 	//url для запроса данных
-			let StartTime = ''; //Начало периода
-			let EndTime = ''; 	//Конец периода
 
 			if(!state.Simulation){
 				urlStr = 'https://jsonplaceholder.typicode.com/posts';
@@ -283,14 +313,9 @@ export const GetList = {
 				urlStr = 'http://localhost:3000/RoutEventList';
 			}
 
-			StartTime = rootGetters['NavAndDate/getStartDate'].toLocaleDateString("en-CA");
-			EndTime = new Date(new Date().setDate(rootGetters['NavAndDate/getEndDate'].getDate() + 1)).toLocaleDateString("en-CA");
-
 			try {
 				const response = await axios.get(urlStr, {
 					params: {
-						startTime: StartTime,
-						endTime: EndTime,
 						ID_Rout: ID_Rout
 					}
 				});
@@ -312,8 +337,6 @@ export const GetList = {
 			state.SensList.length = 0;		
 			state.SensListReceived = false;
 			let urlStr = ''; 	//url для запроса данных
-			let StartTime = ''; //Начало периода
-			let EndTime = ''; 	//Конец периода
 
 			if(!state.Simulation){
 				urlStr = 'https://jsonplaceholder.typicode.com/posts';
