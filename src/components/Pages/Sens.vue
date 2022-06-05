@@ -35,7 +35,7 @@ export default {
 
 <style lang="scss" scoped>
 .sens{
-						border: 1px solid #1916b3;
+	border: 1px solid #1916b3;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
